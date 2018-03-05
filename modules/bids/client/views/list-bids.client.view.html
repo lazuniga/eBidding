@@ -1,0 +1,29 @@
+<section>
+  <div class="page-header">
+    <h1>
+      Bids
+      <a class="btn btn-primary pull-right" data-ui-sref="bids.create">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </h1>
+  </div>
+  <div class="list-group">
+    <table class="table" >
+      <th>Bid Code</th>
+      <th>Bid Name</th>
+      <th>Bid Owner</th>
+      <th>Bid Price</th>
+      <th>Bid Type</th>
+      <tr ng-repeat="bid in vm.bids" data-ui-sref="bids.edit({bidId: bid._id})">
+        <td>{{bid.bidCode}}</td>
+        <td>{{bid.bidName}}</td>
+        <td>{{bid.bidOwner}}</td>
+        <td>{{bid.bidPrice}}</td>
+        <td>{{bid.bidType}}</td>
+      </tr>
+    </table>  
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.bids.$resolved && !vm.bids.length">
+    No bids yet, why don't you <a data-ui-sref="bids.create">create one</a>?
+  </div>
+</section>

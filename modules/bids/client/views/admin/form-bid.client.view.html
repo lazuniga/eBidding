@@ -1,0 +1,87 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.bid._id ? 'Edit Bid' : 'New Bid'}}</h1>
+  </div>
+  <div class="pull-right">
+    <a ng-show="vm.bid._id" class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.bidForm" class="form-horizontal" ng-submit="vm.save(vm.form.bidForm.$valid)" novalidate>
+      <fieldset>
+        
+        <div class="form-group text-center">
+          <img ngf-src="vm.fileSelected ? picFile : vm.bid.bidImageURL" alt="{{vm.user.displayName}}" class="img-thumbnail user-profile-picture" ngf-drop>
+        </div>
+        <div ng-show="!vm.fileSelected" class="text-center form-group">
+          <button class="btn btn-default btn-file" ngf-select="(vm.fileSelected = true) && (vm.loading = false)" ng-model="picFile" accept="image/*" ngf-before-model-change="vm.loading = true" ngf-resize="{width: 400}" ngf-resize-if="$width > 400 || $height > 400">Select Picture</button>
+        </div>
+        <div ng-show="vm.fileSelected" class="text-center form-group">
+          <button class="btn btn-primary" ng-click="vm.upload(picFile)">Use This Picture</button>
+          <button class="btn btn-default" ng-click="vm.fileSelected = false">Cancel</button>
+        </div>
+
+        <div>
+          <div class="form-group" show-errors>
+          <label class="control-label" for="bidCode">Bid Code</label>
+          <input name="bidCode" type="Text" ng-model="vm.bid.bidCode" id="bidCode" class="form-control" placeholder="Bid Code" required autofocus/>
+          <div ng-messages="vm.form.bidForm.bidCode.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Bid Code is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" show-errors>
+          <label class="control-label" for="bidName">Name of Bid</label>
+          <input name="bidName" type="text" ng-model="vm.bid.bidName" id="bidName" class="form-control" placeholder="enter name of the bid" required autofocus>
+          <div ng-messages="vm.form.bidForm.bidName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Bid name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" show-errors>
+          <label class="control-label" for="bidOwner">Bid Owner</label>
+          <div class="dropdown">
+            <select name="bidOwner" type="text" ng-model="vm.bid.bidOwner" id="bidOwner" class="form-control" placeholder="enter head of the bid" required autofocus>
+              <option ng-repeat="user in vm.users | orderBy : 'username'" value="{{user.username}}">{{user.username}}</option>
+            </select>
+          </div>  
+          <div ng-messages="vm.form.bidForm.bidOwner.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Bid Owner is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" show-errors>
+          <label class="control-label" for="bidName">Price</label>
+          <input name="bidPrice" type="numeric" ng-model="vm.bid.bidPrice" id="bidPrice" class="form-control" placeholder="Enter price of the bid" required autofocus>
+          <div ng-messages="vm.form.bidForm.bidPrice.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Bid Price is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" show-errors>
+         
+          <div ng-messages="vm.form.bidForm.bidPrice.$error" role="alert">            
+            <p class="help-block error-text" ng-message="required">Bid Price is required.</p>
+          </div>
+          <label class="control-label" for="bidType">Increment/Decrement</label><br/>         
+          <input type="radio" ng-model="vm.bid.bidType" value="Increment" checked required autofocus>Increment<br/>
+          <input type="radio" ng-model="vm.bid.bidType" value="Decrement" required autofocus>Decrement<br/>
+        </div>
+        <!--
+          if(bidType == 0){
+            //Increment 
+          }
+          else if( == 1){
+            //Decrement 
+          }
+        -->
+
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.bid._id ? 'Update' : 'Create'}}</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
